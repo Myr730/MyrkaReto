@@ -40,6 +40,7 @@ jobs:
     - run: wget -O Global_Cybersecurity_Threats_2015-2024.csv https://github.com/Myr730/MyrkaReto/blob/main/Global_Cybersecurity_Threats_2015-2024.csv
     - run: ls -la  
     - run: spark-submit --master local BaseD.py
+
     
     - name: GIT commit and push docs
       env: 
@@ -48,9 +49,15 @@ jobs:
       run: |
         git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
         git config --global user.email "Myr730@live.com.mx"
-        git add results
-        git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
-        git push
-
+        
+        # Verifica cambios antes de agregar
+        git status
+        
+        # Agregar todos los cambios y evitar error si no hay cambios
+        git add .
+        git diff --cached --exit-code || git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
+        
+        # Solo hacer push si hay commits nuevos
+        git push || echo "No changes to push"
 
 
