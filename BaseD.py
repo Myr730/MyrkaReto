@@ -5,11 +5,11 @@ if __name__ == "__main__":
     spark = SparkSession\
         .builder\
         .appName("CybersecurityAnalysis")\
-        .config("spark.sql.files.maxPartitionBytes", "128MB") \  # Ajusta el tamaño máximo de las particiones
-        .config("spark.sql.files.maxColumns", "20000") \  # Ajusta el límite de columnas procesadas
+        .config("spark.sql.files.maxPartitionBytes", "128MB") \
+        .config("spark.sql.files.maxColumns", "20000") \
         .getOrCreate()
-
-    # 🔹 Cargar el dataset en Spark
+    
+    print("read .csv ... ")
     file_path = "Global_Cybersecurity_Threats_2015-2024.csv"  # Cambia esto al nombre correcto
     df_spark = spark.read.csv(file_path, header=True, inferSchema=True)
 
