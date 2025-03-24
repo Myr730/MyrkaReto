@@ -6,13 +6,12 @@ if __name__ == "__main__":
         .builder\
         .appName("CybersecurityAnalysis")\
         .config("spark.sql.files.maxPartitionBytes", "128MB") \
-        .config("spark.sql.files.maxColumns", "20000") \
         .getOrCreate()
     
     print("read .csv ... ")
     file_path = "Global_Cybersecurity_Threats_2015-2024.csv"  # Cambia esto al nombre correcto
-    df_spark = spark.read.csv(file_path, header=True, inferSchema=True)
-
+    df_spark = spark.read.option("maxColumns", 20480).csv(file_path, header=True, inferSchema=True)
+    
     # 🔹 Renombrar columnas para evitar espacios en nombres
     df_spark = df_spark.withColumnRenamed("Attack Type", "Attack_Type") \
                        .withColumnRenamed("Target Industry", "Target_Industry") \
