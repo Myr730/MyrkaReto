@@ -5,8 +5,8 @@ if __name__ == "__main__":
     # 🔹 Iniciar sesión de Spark
     spark = SparkSession.builder \
         .appName("CybersecurityAnalysis") \
+        .config("spark.sql.files.maxColumns", "20000") \  # Ajusta el límite de columnas si es necesario
         .config("spark.sql.files.maxPartitionBytes", "128MB") \  # Ajusta el tamaño de las particiones si es necesario
-        .config("spark.sql.files.maxColumns", "30000") \  # Ajusta el límite de columnas si es necesario
         .getOrCreate()
 
     # 🔹 Cargar el dataset en Spark
