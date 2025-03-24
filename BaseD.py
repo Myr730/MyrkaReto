@@ -2,14 +2,14 @@ from pyspark.sql import SparkSession
 import json
 
 if __name__ == "__main__":
-    # Iniciar sesión de Spark
+    # 🔹 Iniciar sesión de Spark
     spark = SparkSession.builder.appName("CybersecurityAnalysis").getOrCreate()
 
-    # Cargar el dataset en Spark
-    file_path = "Global_Cybersecurity_Threats_2015-2024.csv"  
+    # 🔹 Cargar el dataset en Spark
+    file_path = "Global_Cybersecurity_Threats_2015-2024.csv"  # Cambia esto al nombre correcto
     df_spark = spark.read.csv(file_path, header=True, inferSchema=True)
 
-    # Renombrar columnas para evitar espacios en nombres
+    # 🔹 Renombrar columnas para evitar espacios en nombres
     df_spark = df_spark.withColumnRenamed("Attack Type", "Attack_Type") \
                        .withColumnRenamed("Target Industry", "Target_Industry") \
                        .withColumnRenamed("Financial Loss (in million $)", "Financial_Loss") \
@@ -19,27 +19,33 @@ if __name__ == "__main__":
                        .withColumnRenamed("Defense Mechanism Used", "Defense_Mechanism") \
                        .withColumnRenamed("Incident Resolution Time (in Hours)", "Resolution_Time")
 
+    # 🔹 Crear una vista temporal para ejecutar consultas SQL
     df_spark.createOrReplaceTempView("cyber_attacks")
 
-    # Consulta SQL: Top 5 países con más ataques
+    # 🔹 Describir la tabla de ataques cibernéticos
+    query = "DESCRIBE cyber_attacks"
+    spark.sql(query).show(20)
+
+    # 🔹 Consulta SQL: Top 5 países con más ataques
     query = """SELECT Country, COUNT(*) AS num_attacks FROM cyber_attacks GROUP BY Country ORDER BY num_attacks DESC LIMIT 5"""
-    df_top_countries = spark.sql(query)
-    df_top_countries.show()
+    spark.sql(query).show(20)
 
-    # Análisis de pérdidas financieras por ataque
+    # 🔹 Análisis de pérdidas financieras por tipo de ataque
     query = """SELECT Attack_Type, SUM(Financial_Loss) AS Total_Loss FROM cyber_attacks GROUP BY Attack_Type ORDER BY Total_Loss DESC"""
-    df_loss = spark.sql(query)
-    df_loss.show()
+    spark.sql(query).show(20)
 
-    # Filtrado de datos por país (puedes elegir un país manualmente o hacerlo de otra forma)
-    selected_country = "USA"  # Puedes poner el país manualmente para probar
+    # 🔹 Filtrado de datos por país
+    selected_country = "USA"  # Cambia esto por el país que deseas
     query_filtered = f"""SELECT * FROM cyber_attacks WHERE Country = "{selected_country}" """
     df_filtered = spark.sql(query_filtered)
     
+    # 🔹 Guardar los resultados filtrados en un archivo JSON
     results = df_filtered.toJSON().collect()
     with open('filtered_data.json', 'w') as file:
         json.dump(results, file)
 
-    print("📂 Datos guardados en `filtered_data.json`")
+    print("Datos guardados en `filtered_data.json`")
 
+    #Detener la sesión de Spark
     spark.stop()
+
