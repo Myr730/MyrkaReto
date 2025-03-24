@@ -36,9 +36,10 @@ jobs:
       with:
         spark-version: '3.5.3'
         hadoop-version: '3'
-
+    - run: wget -O Global_Cybersecurity_Threats_2015-2024.csv https://github.com/Myr730/MyrkaReto/blob/main/Global_Cybersecurity_Threats_2015-2024.csv
     - run: spark-submit --master local BaseD.py
     - run: ls -la  
+    
     - name: GIT commit and push docs
       env: 
         CI_COMMIT_MESSAGE: save results
