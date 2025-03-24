@@ -9,7 +9,7 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName("CybersecurityAnalysis").getOrCreate()
 
 # 🔹 Cargar el dataset en Spark
-file_path = "cybersecurity_data.csv"  # Cambia esto al nombre correcto
+file_path = "Global_Cybersecurity_Threats_2015-2024.csv"  # Cambia esto al nombre correcto
 df_spark = spark.read.csv(file_path, header=True, inferSchema=True)
 
 # 🔹 Renombrar columnas para evitar espacios en nombres
