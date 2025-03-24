@@ -40,8 +40,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install streamlit pyspark pandas
-        
+        pip install streamlit pyspark pandas matplotlib
+   
     - run: wget -O Global_Cybersecurity_Threats_2015-2024.csv https://github.com/Myr730/MyrkaReto/blob/main/Global_Cybersecurity_Threats_2015-2024.csv
     - run: ls -la  
     - run: spark-submit --master local BaseD.py
