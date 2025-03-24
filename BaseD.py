@@ -19,9 +19,6 @@ if __name__ == "__main__":
                        .withColumnRenamed("Defense Mechanism Used", "Defense_Mechanism") \
                        .withColumnRenamed("Incident Resolution Time (in Hours)", "Resolution_Time")
 
-    # 🔹 Crear una vista temporal para ejecutar consultas SQL
-    df_spark.createOrReplaceTempView("cyber_attacks")
-
     # 🔹 Describir la tabla de ataques cibernéticos
     query = "DESCRIBE cyber_attacks"
     spark.sql(query).show(20)
@@ -35,17 +32,15 @@ if __name__ == "__main__":
     spark.sql(query).show(20)
 
     # 🔹 Filtrado de datos por país
-    selected_country = "USA"  # Cambia esto por el país que deseas
-    query_filtered = f"""SELECT * FROM cyber_attacks WHERE Country = "{selected_country}" """
+    selected_country = "USA"  
+    query_filtered = f"""SELECT * FROM cyber_attacks WHERE Country = '{selected_country}' """
     df_filtered = spark.sql(query_filtered)
     
-    # 🔹 Guardar los resultados filtrados en un archivo JSON
-    results = df_filtered.toJSON().collect()
+    results = df_filtered.toJSON().collect() 
     with open('filtered_data.json', 'w') as file:
         json.dump(results, file)
 
     print("Datos guardados en `filtered_data.json`")
 
-    #Detener la sesión de Spark
     spark.stop()
 
