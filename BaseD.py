@@ -3,10 +3,10 @@ import json
 
 if __name__ == "__main__":
     # 🔹 Iniciar sesión de Spark
-    spark = SparkSession.builder\
-        .appName("CybersecurityAnalysis")\
-        .config("spark.sql.files.maxColumns", "20000")\ 
-        .config("spark.sql.files.maxPartitionBytes", "128MB")\ 
+    spark = SparkSession.builder \
+        .appName("CybersecurityAnalysis") \
+        .config("spark.sql.files.maxColumns", "20000")  # Ajusta el límite de columnas si es necesario
+        .config("spark.sql.files.maxPartitionBytes", "128MB")  # Ajusta el tamaño de las particiones si es necesario
         .getOrCreate()
 
     # 🔹 Cargar el dataset en Spark
@@ -14,13 +14,13 @@ if __name__ == "__main__":
     df_spark = spark.read.csv(file_path, header=True, inferSchema=True)
 
     # 🔹 Renombrar columnas para evitar espacios en nombres
-    df_spark = df_spark.withColumnRenamed("Attack Type", "Attack_Type")\
-                       .withColumnRenamed("Target Industry", "Target_Industry")\
-                       .withColumnRenamed("Financial Loss (in million $)", "Financial_Loss")\
-                       .withColumnRenamed("Number of Affected Users", "Affected_Users")\
-                       .withColumnRenamed("Attack Source", "Attack_Source")\
-                       .withColumnRenamed("Security Vulnerability Type", "Vulnerability_Type")\
-                       .withColumnRenamed("Defense Mechanism Used", "Defense_Mechanism")\
+    df_spark = df_spark.withColumnRenamed("Attack Type", "Attack_Type") \
+                       .withColumnRenamed("Target Industry", "Target_Industry") \
+                       .withColumnRenamed("Financial Loss (in million $)", "Financial_Loss") \
+                       .withColumnRenamed("Number of Affected Users", "Affected_Users") \
+                       .withColumnRenamed("Attack Source", "Attack_Source") \
+                       .withColumnRenamed("Security Vulnerability Type", "Vulnerability_Type") \
+                       .withColumnRenamed("Defense Mechanism Used", "Defense_Mechanism") \
                        .withColumnRenamed("Incident Resolution Time (in Hours)", "Resolution_Time")
 
     # 🔹 Describir la tabla de ataques cibernéticos
