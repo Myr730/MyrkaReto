@@ -36,6 +36,7 @@ jobs:
       with:
         spark-version: '3.5.3'
         hadoop-version: '3'
+        
     - name: Install Streamlit and PySpark
         run: |
           pip install --upgrade pip  
