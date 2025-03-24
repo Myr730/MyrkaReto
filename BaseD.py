@@ -3,7 +3,11 @@ import json
 
 if __name__ == "__main__":
     # 🔹 Iniciar sesión de Spark
-    spark = SparkSession.builder.appName("CybersecurityAnalysis").getOrCreate()
+    spark = SparkSession.builder \
+        .appName("CybersecurityAnalysis") \
+        .config("spark.sql.files.maxPartitionBytes", "128MB") \  # Ajusta el tamaño de las particiones si es necesario
+        .config("spark.sql.files.maxColumns", "30000") \  # Ajusta el límite de columnas si es necesario
+        .getOrCreate()
 
     # 🔹 Cargar el dataset en Spark
     file_path = "Global_Cybersecurity_Threats_2015-2024.csv"  # Cambia esto al nombre correcto
