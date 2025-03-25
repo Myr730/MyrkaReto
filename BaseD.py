@@ -10,7 +10,7 @@ if __name__ == "__main__":
     try:
         df_spark = spark.read.option("maxColumns", 20480).csv(file_path, header=True, inferSchema=True)
         df_spark.show(5)  
-        df_spark.printSchema()  # Muestra la estructura de las columnass
+        df_spark.printSchema()  
     except Exception as e:
         print(f"Error al leer el CSV: {e}")
         spark.stop()
