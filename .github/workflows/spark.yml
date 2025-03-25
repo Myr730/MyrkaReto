@@ -39,7 +39,7 @@ jobs:
         
     - run: wget -O Global_Cybersecurity_Threats_2015-2024.csv https://raw.githubusercontent.com/Myr730/MyrkaReto/main/Global_Cybersecurity_Threats_2015-2024.csv
     - run: ls -la
-    - run: spark-submit --master local people.py
+    - run: spark-submit --master local BaseD.py
     
     - name: GIT commit and push docs
       env: 
