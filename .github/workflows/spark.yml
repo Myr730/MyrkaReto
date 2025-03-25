@@ -44,25 +44,17 @@ jobs:
     - name: GIT commit and push docs
       env: 
         CI_COMMIT_MESSAGE: save spark results
-        CI_COMMIT_AUTHOR: adsoft 
+        CI_COMMIT_AUTHOR: Myr730 
       run: |
         git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
         git config --global user.email "Myr730@live.com.mx"
-        git add results
-        git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
-        git push
-#    - uses: w9jds/firebase-trigger@v1.1.0
-#      with:
-#        credentials: ${{ secrets.FIREBASE_CREDENTIALS }}
-#        databaseUrl: https://big-data-a3266.firebaseio.com
-#        databaseType: firestore
-#        path: results
-#        doc: myresult2
-#        value: ${{ secrets.FIREBASE_CREDENTIALS }}
-        
 
+        ls -la  # Verifica qué archivos hay
 
-
-
-                
- 
+        if [ -f "filtered_data.json" ]; then
+          git add filtered_data.json
+          git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
+          git push || echo "No changes to push"
+        else
+          echo "No results file found, skipping commit."
+        fi
