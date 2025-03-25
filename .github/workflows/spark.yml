@@ -36,13 +36,10 @@ jobs:
       with:
         spark-version: '3.5.3'
         hadoop-version: '3'
-    - run: spark-submit --version
-    - run: wget -O BaseD.py https://raw.githubusercontent.com/Myr730/bigdata/refs/heads/main/spark-submit/BaseD.py
+        
     - run: wget -O Global_Cybersecurity_Threats_2015-2024.csv https://raw.githubusercontent.com/Myr730/MyrkaReto/main/Global_Cybersecurity_Threats_2015-2024.csv
     - run: ls -la
-    - run: spark-submit --master local BaseD.py Global_Cybersecurity_Threats_2015-2024.csv 
-    - run: ls -la
-    - run: ls results  
+    - run: spark-submit --master local people.py
     
     - name: GIT commit and push docs
       env: 
